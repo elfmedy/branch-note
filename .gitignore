@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.test-build/
+main.js
+data.json
+*.tsbuildinfo
+test-results/
+packages/

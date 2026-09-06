@@ -1,0 +1,9 @@
+{
+  "id": "branch-note",
+  "name": "Branch Note",
+  "version": "0.1.1",
+  "minAppVersion": "1.13.7",
+  "description": "Grow notes into pages with children, using ordinary folders and matching Markdown home notes.",
+  "author": "elfmedy",
+  "isDesktopOnly": false
+}
