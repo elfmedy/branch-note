@@ -12,7 +12,7 @@ Branch Note 让普通笔记自然长出子笔记，使用标准 Markdown 文件�
 - **重命名**：通过 Obsidian 重命名目录或在编辑器标题处重命名首页时，同步修改目录及首页名称，使用文件管理接口更新链接；遇到路径冲突停止操作。
 - **删除首页**：首页存在时，插件分隔区中提供此独立命令，仅删除首页并保留目录及子条目。原生“删除”和 Delete 键保持默认行为，可删除整个目录。文件使用 Obsidian 配置的回收站。
 - **撤销上次页面操作**：命令面板支持撤销最近的新建、目录重命名和删除首页。新建子笔记及父级转换是一个动作；子笔记已经书写或结构发生变化时会停止撤销，保留新内容。撤销历史限本次插件运行的最近 20 次。
-- **语言**：设置中只有“语言”一项，支持中文、English；初次启用跟随 Obsidian 界面语言。
+- **语言**：设置中只有“语言”一项，可选跟随 Obsidian、中文、English。默认持续跟随 Obsidian；升级保留原先明确选择的语言。
 
 ### 安装
 
@@ -44,7 +44,7 @@ The home is hidden in the explorer. Only folders with other children have an exp
 
 The command palette provides **Undo last page action** for up to 20 creation, folder rename and home deletion actions in the current session. Promotion plus child creation is one action. Undo refuses to discard edited children or overwrite occupied paths. Markdown text editing retains native editor undo.
 
-Settings contain one **Language** selector: English or 中文. The initial choice follows Obsidian. There is no network access, analytics or note metadata. Writing and saving now use the native Markdown editor. Legacy recovery drafts from version 0.1.0 remain in local plugin `data.json`; use **Recover unsaved page** to copy them.
+Settings contain one **Language** selector: Follow Obsidian, 中文, or English. Following Obsidian is the default; existing explicit choices survive upgrades. There is no network access, analytics or note metadata. Writing and saving now use the native Markdown editor. Legacy recovery drafts from version 0.1.0 remain in local plugin `data.json`; use **Recover unsaved page** to copy them.
 
 Requires Obsidian **1.13.7+**. In BRAT settings, add `elfmedy/branch-note` (or `https://github.com/elfmedy/branch-note`), select the latest version, install and enable Branch Note. BRAT can manage future updates. Alternatively, download the three files from [GitHub Releases](https://github.com/elfmedy/branch-note/releases/latest) into `.obsidian/plugins/branch-note/`. This plugin is not currently distributed through the Obsidian community plugin directory. Do not enable another same-name folder-home plugin alongside it. See [compatibility](COMPATIBILITY.md) and [validation](VALIDATION.md) for actual test coverage and limitations.
 

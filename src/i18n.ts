@@ -1,6 +1,7 @@
-export type Language = "zh" | "en";
+export type Language = "auto" | "zh" | "en";
 const en = {
   language: "Language",
+  auto: "Follow Obsidian",
   languageDescription: "Choose the language used by Branch Note.",
   newChild: "New child note",
   untitled: "Untitled",
@@ -41,6 +42,7 @@ const en = {
 export type TextKey = keyof typeof en;
 const zh: Record<TextKey, string> = {
   language: "语言",
+  auto: "跟随 Obsidian",
   languageDescription: "选择 Branch Note 使用的界面语言。",
   newChild: "新建子笔记",
   untitled: "未命名",
@@ -73,12 +75,20 @@ const zh: Record<TextKey, string> = {
     "可复制下方文本并粘贴到笔记中。即使原目录已移动或删除，草稿仍会保留。",
   selectText: "选择全文",
 };
-export const text = (language: Language, key: TextKey): string =>
-  (language === "zh" ? zh : en)[key];
-export function languageFrom(value: unknown, fallback: string): Language {
-  return value === "zh" || value === "en"
-    ? value
-    : fallback.startsWith("zh")
+export const text = (
+  language: Exclude<Language, "auto">,
+  key: TextKey,
+): string => (language === "zh" ? zh : en)[key];
+export function languageFrom(value: unknown): Language {
+  return value === "zh" || value === "en" ? value : "auto";
+}
+export function resolveLanguage(
+  language: Language,
+  obsidianLanguage: string,
+): Exclude<Language, "auto"> {
+  return language === "auto"
+    ? obsidianLanguage.toLowerCase().startsWith("zh")
       ? "zh"
-      : "en";
+      : "en"
+    : language;
 }

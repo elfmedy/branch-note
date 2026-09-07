@@ -1,5 +1,11 @@
 import { TFile, TFolder, type App, type TAbstractFile } from "obsidian";
-import { BranchError, homeOf, type FilePort, type Node } from "./core";
+import {
+  BranchError,
+  homeOf,
+  parentPath,
+  type FilePort,
+  type Node,
+} from "./core";
 
 export class ObsidianFiles implements FilePort {
   constructor(
@@ -68,6 +74,65 @@ export interface Explorer {
   getSortedFolderItems(folder: TFolder): ExplorerItem[];
   requestSort(): void;
   fileBeingRenamed?: TAbstractFile | null;
+  activeDom?: ExplorerItem | null;
+  revealActiveFile?(): void;
+  revealInFolder?(file: TAbstractFile): void;
+}
+
+/** Hidden homes are represented by their folder when native navigation reveals them. */
+export function routeHomeReveals(view: Explorer, fs: FilePort): () => void {
+  let active = true;
+  const cleanups: (() => void)[] = [];
+  const folderItem = (file: TAbstractFile): ExplorerItem | undefined => {
+    const parent = parentPath(file.path);
+    return homeOf(fs, parent)?.path === file.path
+      ? view.fileItems[parent]
+      : undefined;
+  };
+  if (typeof view.revealActiveFile === "function") {
+    // eslint-disable-next-line @typescript-eslint/unbound-method -- Retain identity and delegate with the original receiver.
+    const previous = view.revealActiveFile;
+    const own = Object.hasOwn(view, "revealActiveFile");
+    const reveal = (): void => {
+      const original = view.activeDom;
+      const folder = active && original ? folderItem(original.file) : undefined;
+      if (!folder) return previous.call(view);
+      // Native reveal is synchronous (including scheduling a later reveal when hidden).
+      // Its saved parent pointer can still refer to a home removed by the sort filter.
+      view.activeDom = folder;
+      try {
+        previous.call(view);
+      } finally {
+        if (view.activeDom === folder) view.activeDom = original;
+      }
+    };
+    view.revealActiveFile = reveal;
+    cleanups.push(() => {
+      if (view.revealActiveFile === reveal) {
+        if (own) view.revealActiveFile = previous;
+        else delete view.revealActiveFile;
+      }
+    });
+  }
+  if (typeof view.revealInFolder === "function") {
+    // eslint-disable-next-line @typescript-eslint/unbound-method -- Retain identity and delegate with the original receiver.
+    const previous = view.revealInFolder;
+    const own = Object.hasOwn(view, "revealInFolder");
+    const reveal = (file: TAbstractFile): void => {
+      previous.call(view, (active && folderItem(file)?.file) || file);
+    };
+    view.revealInFolder = reveal;
+    cleanups.push(() => {
+      if (view.revealInFolder === reveal) {
+        if (own) view.revealInFolder = previous;
+        else delete view.revealInFolder;
+      }
+    });
+  }
+  return () => {
+    active = false;
+    for (const cleanup of cleanups) cleanup();
+  };
 }
 export function isExplorer(value: unknown): value is Explorer {
   const view = value as Partial<Explorer> | null;

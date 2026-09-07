@@ -1,19 +1,19 @@
-Branch Note 0.1.1 — first public release / 首个公开版本
+Branch Note 0.1.2
 
-## Install with BRAT / 通过 BRAT 安装
+## 中文
 
-Add `elfmedy/branch-note` in BRAT, select the latest version, then enable **Branch Note**. Requires Obsidian **1.13.7+**. Disable Folder Notes or other plugins that manage the same folder-home convention before enabling Branch Note.
+- 语言设置增加“跟随 Obsidian”，共三个选项：跟随 Obsidian、中文、English。升级保留已有语言选择。
+- 修复打开目录首页后，被 Obsidian 的自动定位再次展开目录的问题。隐藏首页现在定位到目录条目，包含重新打开移动端侧栏后执行的延迟定位。
+- 普通子文件仍可正常自动定位，点击箭头仍可展开和折叠。
 
-在 BRAT 中添加 `elfmedy/branch-note`，选择最新版本并启用 **Branch Note**。要求 Obsidian **1.13.7+**。启用前请停用 Folder Notes 等接管同名目录首页的插件。
+在 BRAT 中更新 `elfmedy/branch-note` 到 **0.1.2**。要求 Obsidian **1.13.7+**。请在 iPhone 上更新后再次测试；本次验证使用 Windows 桌面及 Obsidian 移动模拟模式，尚未实机验证 iOS。
 
-## Features / 功能
+## English
 
-- **New child note / 新建子笔记** in a separate context-menu group. Ordinary notes become parent pages while their content is preserved.
-- A matching `Folder/Folder.md` is automatically recognized as the folder's home, even when empty.
-- **Start writing / 开始书写** creates an absent home immediately and opens the native Markdown editor.
-- Folder and home renaming stay synchronized. **Delete home note / 删除首页** is separate from native deletion; native Delete can still remove whole folders.
-- One setting: English or Chinese. Compatible load/unload behavior tested with Quiet Tree 0.2.2.
+- Add Follow Obsidian to the language selector, alongside Chinese and English. Preserve existing language choices during upgrade.
+- Fix native auto-reveal expanding a folder after opening its hidden home. Reveal now targets the folder item, including deferred reveal when reopening the mobile sidebar.
+- Preserve ordinary child-file reveal and expand/collapse through the arrow.
 
-验证结果：26 项核心测试、21 项 Sandbox 交互测试、9 项 Quiet Tree/生命周期测试通过；TypeScript 与官方 lint 检查通过。Windows 桌面版已验证，手机及 macOS 尚未实机验证。此次仅通过 GitHub/BRAT 发布，不提交 Obsidian 插件市场。
+Update `elfmedy/branch-note` to **0.1.2** in BRAT. Requires Obsidian **1.13.7+**. Windows desktop and Obsidian mobile emulation were checked; physical iOS confirmation remains pending.
 
-For manual installation, download all three attached files into `.obsidian/plugins/branch-note/`. See the repository README and compatibility notes for details.
+For manual installation, download all three assets into `.obsidian/plugins/branch-note/`. This release is distributed through GitHub/BRAT only.

@@ -1,33 +1,35 @@
-# Validation — 0.1.1
+# Validation — 0.1.2
 
-Date: **2026-09-06**. Obsidian desktop **1.13.7**, installer **1.12.7**, Windows; Quiet Tree **0.2.2**. Node.js **24.19.0**.
+Date: **2026-09-07**. Obsidian **1.13.7**, installer **1.12.7**, Windows; Quiet Tree **0.2.2**. Node.js **24.19.0**.
 
-## Current checks
+## Checks
 
-- TypeScript strict check and official `eslint-plugin-obsidianmd` recommended rules: passed, zero errors or warnings. Narrow unbound-method exemptions document cooperative wrapper delegation; no Obsidian guideline rules are disabled.
-- Core file-operation tests: **26 passed**. Explicit home creation immediately creates an empty file, reuses any existing home without overwriting, serializes repeated clicks, rejects conflicts and protects later edits during undo. Promotion, content preservation, rename, home-only deletion, rollback and concurrency regressions also pass.
-- `scripts/sandbox-check.js`: **21 passed** inside the running Obsidian application. Tests cover actual menu grouping and separator DOM, unchanged native menu callbacks, direct Start-to-Markdown navigation, empty promoted/external homes, same-name recognition, folder arrows, rename and link resolution, isolated Delete home note, and legacy draft recovery.
-- The native folder Delete menu and Delete key both reach Obsidian's original full-folder deletion prompt. The harness substitutes a cancel response and verifies that the folder, homepage and children remain; it does not alter the user's deletion preference.
-- `scripts/sandbox-lifecycle.js`: **9 passed**, covering both Quiet Tree load orders, independent unload/reload, preserved sibling order and drag handles, canceled click suppression, language persistence, and exactly one visible language dropdown. Unrelated Quiet Tree order data compared equal before and after.
-- Total: **56 passing core/native tests**.
-- Production check: exactly `main.js`, `manifest.json`, `styles.css`, only `obsidian` imported at runtime, no source map or network/HTML-injection APIs. Manifest, package, lockfile and version mapping agree on 0.1.1.
-- Dependencies are unchanged from 0.1.0's clean npm install and public-registry audit on this date (zero known vulnerabilities). No new dependency was introduced.
+- TypeScript strict check and official Obsidian ESLint rules: passed, no warnings.
+- File-operation tests: **26 passed**; language tests: **4 passed**. The auto setting resolves the current host language each time; missing settings default to auto and existing explicit choices survive upgrade.
+- `scripts/sandbox-check.js`: **21 passed**. Native Markdown writing, empty homes, creation, deletion, undo, menu grouping, link updates, rename and recovery regressions.
+- `scripts/sandbox-lifecycle.js`: **10 passed**. Quiet Tree load orders and cleanup, preserved order and handles, canceled clicks, exactly one language selector with auto/zh/en, and language persistence across reload.
+- `scripts/sandbox-interaction.js`: **15 passed in desktop mode and 15 passed in Obsidian mobile emulation**. Synthetic touch-origin name/arrow clicks cover no home, empty home, written home and visible children. Reveal checks cover previously rendered homes, ancestor expansion, explicit reveal, deferred reveal after reopening the sidebar, ordinary children and unload restoration.
+- Production check: only `obsidian` imported at runtime; exactly three assets; no network, Node/Electron or HTML injection in the bundle. Manifest, package, lockfile and version mapping agree on 0.1.2. Dependencies are unchanged.
 
-The separate writing area and native deletion overrides from 0.1.0 have been removed. Text editing, saving and input-method handling now belong to Obsidian's native Markdown editor. Existing 0.1.0 recovery drafts remain readable and are not silently discarded.
+## Cause and scope
+
+The native explorer retains a parent pointer for home items rendered before Branch Note hides them. With auto-reveal enabled, opening that home walks the stale parent chain and expands its folder. The issue was reproduced with a home rendered while Branch Note was unloaded, then hidden after reloading. Newly created, never-rendered home items alone did not reproduce it.
+
+The fix maps hidden homes to their folder during native reveal, preserving the folder's collapsed state while revealing ancestors. It restores the active native item even if reveal throws. Existing name-click handling is unchanged. The reporter uses iPhone, Obsidian 1.13.7 (365); physical device confirmation remains pending. Desktop mobile emulation is not iOS WebKit testing.
 
 ## Reproduce
 
-With Node.js 24 LTS, run `npm ci` and `npm run check` from this standalone project. Install the three `dist` files in the authorized Sandbox and enable Branch Note and Quiet Tree. Keep Obsidian visible: its renderer suspends animation-frame callbacks while hidden, including Quiet Tree's handle decoration.
-
-In PowerShell, substitute the absolute path to this project:
+Run `npm ci` and `npm run check` with Node.js 24. Install the three `dist` files in the authorized Sandbox. Keep Obsidian visible so renderer animation frames run. Invoke each harness through the developer CLI, substituting the local checkout path:
 
 ```powershell
 obsidian 'vault=Obsidian Sandbox' eval "code=eval(require('fs').readFileSync('D:/path/to/branch-note/scripts/sandbox-check.js','utf8'))"
 obsidian 'vault=Obsidian Sandbox' eval "code=eval(require('fs').readFileSync('D:/path/to/branch-note/scripts/sandbox-lifecycle.js','utf8'))"
+obsidian 'vault=Obsidian Sandbox' eval "code=eval(require('fs').readFileSync('D:/path/to/branch-note/scripts/sandbox-interaction.js','utf8'))"
+obsidian 'vault=Obsidian Sandbox' dev:mobile on
+# Run sandbox-interaction.js again after the app reloads.
+obsidian 'vault=Obsidian Sandbox' dev:mobile off
 ```
 
-Returned JSON must have `failed: 0`; the CLI can exit successfully while returning a failed assertion. The development harness uses Node.js, but the shipped plugin does not. For link checks the Sandbox must enable automatic link updates.
+Read the returned JSON: CLI exit code alone does not establish passing tests. The interaction harness waits for mobile drawer animations before subsequent activation. Each harness refuses other vault names and removes only its uniquely named fixture; language and auto-reveal settings are restored. Lifecycle tests reload plugins and should run only outside active editing. Test scripts use developer-only Node access; the production plugin does not.
 
-Scripts refuse to run outside a vault named Obsidian Sandbox. They create uniquely named fixtures, remove only those fixtures, preserve plugin enablement and restore the language. The lifecycle test briefly reloads both plugins; run only when no draft is actively being edited. Transcripts are saved in ignored `test-results/`, excluded from release archives.
-
-GitHub release CI repeats static checks and core tests before publishing assets and attestations. Native Sandbox tests remain a separate local check. This project is distributed through GitHub/BRAT; no community-directory submission is part of this release. Physical Android/iOS and macOS, mobile IMEs, large synced vaults, arbitrary themes and replacement file trees remain unverified; see `COMPATIBILITY.md`.
+GitHub CI repeats static/build/unit checks and publishes the three assets with attestations. Distribution remains GitHub/BRAT, without an Obsidian community-directory submission. See `COMPATIBILITY.md` for platform and API limits.

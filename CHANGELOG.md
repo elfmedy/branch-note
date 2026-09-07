@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+- Add Follow Obsidian alongside Chinese and English in the single language setting. Preserve existing explicit language choices.
+- Reveal a hidden home as its folder, preventing native auto-reveal from expanding that folder after opening its home. Cover previously rendered homes and deferred reveal when reopening the mobile sidebar.
+- Keep native reveal of ordinary child files and explicit arrow expansion intact.
+
 ## 0.1.1
 
 - Group plugin commands in a dedicated, separated context-menu section on files and folders.

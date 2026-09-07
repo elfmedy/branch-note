@@ -108,6 +108,10 @@
       const dropdown = tab.containerEl.querySelector(
         'select:not([aria-hidden="true"])',
       );
+      ok(
+        [...dropdown.options].map((o) => o.value).join(",") === "auto,zh,en",
+        "Expected Follow Obsidian, Chinese, English",
+      );
       dropdown.value = "zh";
       dropdown.dispatchEvent(new Event("change", { bubbles: true }));
       await wait();
@@ -117,6 +121,16 @@
         "Chinese settings not rendered",
       );
       app.setting.close();
+    });
+    await test("Follow Obsidian persists as auto across reload", async () => {
+      await bn.setLanguage("auto");
+      const label = bn.t("newChild");
+      await app.plugins.unloadPlugin("branch-note");
+      await app.plugins.loadPlugin("branch-note");
+      bn = app.plugins.plugins["branch-note"];
+      ok(bn.language === "auto", "Auto resolved into a fixed saved language");
+      ok(bn.t("newChild") === label, "Resolved language changed on reload");
+      await wait();
     });
     await test("Drag-suppressed click cannot open a folder page", async () => {
       const leaf = app.workspace.getLeaf("tab");

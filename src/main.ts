@@ -26,16 +26,23 @@ import {
 import {
   ObsidianFiles,
   filterHomes,
+  routeHomeReveals,
   isExplorer,
   type Explorer,
   type ExplorerItem,
 } from "./native";
 import { HOME_VIEW, HomeView, type Draft } from "./home-view";
 import { RecoveryModal } from "./recovery";
-import { languageFrom, text, type Language, type TextKey } from "./i18n";
+import {
+  languageFrom,
+  resolveLanguage,
+  text,
+  type Language,
+  type TextKey,
+} from "./i18n";
 
 export default class BranchNotePlugin extends Plugin {
-  language: Language = "en";
+  language: Language = "auto";
   drafts: Record<string, Draft> = Object.create(null) as Record<string, Draft>;
   files!: ObsidianFiles;
   service!: BranchService;
@@ -48,14 +55,15 @@ export default class BranchNotePlugin extends Plugin {
   private dataQueue: Promise<void> = Promise.resolve();
   private ownMoves = new Set<string>();
   private commandLabels: { command: Command; key: TextKey }[] = [];
-  t = (key: TextKey): string => text(this.language, key);
+  t = (key: TextKey): string =>
+    text(resolveLanguage(this.language, getLanguage()), key);
   async onload(): Promise<void> {
     const saved: unknown = await this.loadData();
     const data =
       saved && typeof saved === "object"
         ? (saved as Record<string, unknown>)
         : {};
-    this.language = languageFrom(data.language, getLanguage());
+    this.language = languageFrom(data.language);
     if (data.drafts && typeof data.drafts === "object") {
       for (const value of Object.values(data.drafts)) {
         const draft = value as Partial<Draft> | null;
@@ -272,6 +280,7 @@ export default class BranchNotePlugin extends Plugin {
       current.add(view);
       if (this.views.has(view)) continue;
       const restore = filterHomes(view, this.files);
+      const restoreReveals = routeHomeReveals(view, this.files);
       let active = true,
         frame = 0;
       const observer = new MutationObserver(() => {
@@ -287,6 +296,7 @@ export default class BranchNotePlugin extends Plugin {
         observer.disconnect();
         view.containerEl.win.cancelAnimationFrame(frame);
         restore();
+        restoreReveals();
         for (const [item, hook] of this.itemClicks)
           if (hook.view === view) {
             hook.dispose();
@@ -426,11 +436,12 @@ class BranchSettings extends PluginSettingTab {
         render: (setting) => {
           setting.addDropdown((dropdown) =>
             dropdown
+              .addOption("auto", this.plugin.t("auto"))
               .addOption("zh", "中文")
               .addOption("en", "English")
               .setValue(this.plugin.language)
               .onChange(async (value) => {
-                await this.plugin.setLanguage(value === "zh" ? "zh" : "en");
+                await this.plugin.setLanguage(languageFrom(value));
                 this.update();
               }),
           );
