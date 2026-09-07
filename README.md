@@ -18,9 +18,11 @@ Branch Note 让普通笔记自然长出子笔记，使用标准 Markdown 文件�
 
 要求 Obsidian **1.13.7 或更新版本**。
 
+**Obsidian 社区目录**：[Branch Note](https://community.obsidian.md/plugins/branch-note)。已通过市场自动审核并发布，可在“设置 → 第三方插件 → 浏览”中搜索 **Branch Note** 安装；应用内目录同步可能晚于网页条目。
+
 **通过 BRAT 安装**：在 BRAT 设置中添加仓库 `elfmedy/branch-note`（或粘贴 `https://github.com/elfmedy/branch-note`），选择最新版本并安装，再启用 **Branch Note**。BRAT 可管理后续更新。
 
-也可以从 [GitHub Releases](https://github.com/elfmedy/branch-note/releases/latest) 下载 `main.js`、`manifest.json`、`styles.css`，放进库的 `.obsidian/plugins/branch-note/` 后启用。本插件目前不在 Obsidian 社区插件市场中发布。
+也可以从 [GitHub Releases](https://github.com/elfmedy/branch-note/releases/latest) 下载 `main.js`、`manifest.json`、`styles.css`，放进库的 `.obsidian/plugins/branch-note/` 后启用。
 
 ### 行为边界
 
@@ -46,7 +48,7 @@ The command palette provides **Undo last page action** for up to 20 creation, fo
 
 Settings contain one **Language** selector: Follow Obsidian, 中文, or English. Following Obsidian is the default; existing explicit choices survive upgrades. There is no network access, analytics or note metadata. Writing and saving now use the native Markdown editor. Legacy recovery drafts from version 0.1.0 remain in local plugin `data.json`; use **Recover unsaved page** to copy them.
 
-Requires Obsidian **1.13.7+**. In BRAT settings, add `elfmedy/branch-note` (or `https://github.com/elfmedy/branch-note`), select the latest version, install and enable Branch Note. BRAT can manage future updates. Alternatively, download the three files from [GitHub Releases](https://github.com/elfmedy/branch-note/releases/latest) into `.obsidian/plugins/branch-note/`. This plugin is not currently distributed through the Obsidian community plugin directory. Do not enable another same-name folder-home plugin alongside it. See [compatibility](COMPATIBILITY.md) and [validation](VALIDATION.md) for actual test coverage and limitations.
+Requires Obsidian **1.13.7+**. Published in the [Obsidian community directory](https://community.obsidian.md/plugins/branch-note) after passing automated review. Search for **Branch Note** in Settings → Community plugins → Browse to install it; the in-app directory may update after the website. In BRAT settings, add `elfmedy/branch-note` (or `https://github.com/elfmedy/branch-note`), select the latest version, install and enable Branch Note. BRAT can manage future updates. Alternatively, download the three files from [GitHub Releases](https://github.com/elfmedy/branch-note/releases/latest) into `.obsidian/plugins/branch-note/`. Do not enable another same-name folder-home plugin alongside it. See [compatibility](COMPATIBILITY.md) and [validation](VALIDATION.md) for actual test coverage and limitations.
 
 ## Development
 

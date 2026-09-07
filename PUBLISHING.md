@@ -1,6 +1,19 @@
 # 发布与维护
 
-本项目通过公共仓库 [elfmedy/branch-note](https://github.com/elfmedy/branch-note) 的 GitHub Releases 分发，供 BRAT 安装及更新。当前版本 **0.1.1**。不提交 Obsidian 社区插件市场。
+本项目通过公共仓库 [elfmedy/branch-note](https://github.com/elfmedy/branch-note) 的 GitHub Releases 提供安装包，支持 Obsidian 社区目录和 BRAT。当前版本 **0.1.2**。
+
+## Obsidian 社区目录
+
+按[官方提交流程](https://docs.obsidian.md/plugins/releasing/submit-plugin)，通过社区网站提交与管理条目，不另外创建 GitHub 上架 PR。
+
+- [市场条目](https://community.obsidian.md/plugins/branch-note)
+- [管理与自动审核](https://community.obsidian.md/account/plugins/branch-note)
+
+2026-09-07：**0.1.2** 已发布，自动审核状态 **Completed**，未显示错误或警告。Release 来源证明、网络行为、依赖检查均通过；市场成功从源码逐字节复现 `main.js`。分类为 **Folders / Files**。
+
+首次提交选择仓库 `elfmedy/branch-note`，确认开发者规范和维护声明，核对英文简介与分类，再发布条目。检查自动审核是否完成、有无阻断错误，以及发布附件是否可从源码逐字节复现。发布条目和通过审核是不同状态，两者都应确认。应用内搜索暂未同步不意味着需要另发插件版本。
+
+如果审核发现代码问题，修复后递增版本并发布新的 GitHub Release，在管理页检查新版。只修改市场文案或仓库文档时无需重新发布相同的插件代码。人工复核仅在有实际复核需求时使用。
 
 ## 发布检查
 

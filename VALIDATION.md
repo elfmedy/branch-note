@@ -32,4 +32,10 @@ obsidian 'vault=Obsidian Sandbox' dev:mobile off
 
 Read the returned JSON: CLI exit code alone does not establish passing tests. The interaction harness waits for mobile drawer animations before subsequent activation. Each harness refuses other vault names and removes only its uniquely named fixture; language and auto-reveal settings are restored. Lifecycle tests reload plugins and should run only outside active editing. Test scripts use developer-only Node access; the production plugin does not.
 
-GitHub CI repeats static/build/unit checks and publishes the three assets with attestations. Distribution remains GitHub/BRAT, without an Obsidian community-directory submission. See `COMPATIBILITY.md` for platform and API limits.
+GitHub CI repeats static/build/unit checks and publishes the three assets with attestations. See `COMPATIBILITY.md` for platform and API limits.
+
+## Obsidian community directory
+
+On **2026-09-07**, version **0.1.2** (commit `a9d7d10e53e6d1f738fc740ff4a20a6d71401d46`) was submitted and published through the community account portal. The review reached **Completed**, with no displayed errors or warnings. Release attestations, network behavior and dependency checks passed; the directory reproduced the release `main.js` byte-for-byte. Categories: Folders (primary), Files. This changes distribution status, not the tested production bundle. The initial GitHub release notes describe the earlier BRAT-only launch.
+
+[Public listing](https://community.obsidian.md/plugins/branch-note) · [Review details](https://community.obsidian.md/account/plugins/branch-note)
