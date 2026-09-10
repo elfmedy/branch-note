@@ -1,4 +1,17 @@
-# Validation — 0.1.2
+# Validation
+
+## 0.1.3 — presentation and documentation
+
+Date: **2026-09-10**. Node.js **24.19.0**.
+
+- TypeScript, Obsidian ESLint, all **30 tests**, release metadata, production build and bundle checks passed.
+- Verified **31** local documentation links, anchors and assets across both overview pages and both guides.
+- Captured and visually checked the overview screenshot in Obsidian Sandbox 1.13.7 using an isolated demonstration folder. Removed the fixture and restored the language, explorer and window state afterward.
+- Production `main.js` and `styles.css` are byte-for-byte identical to the published 0.1.2 assets. The manifest version is 0.1.3; runtime behavior and settings are unchanged.
+- The source archive includes both overview pages, both guides and their image assets. The install archive still contains exactly the three plugin assets.
+- Native interaction coverage below is the previous 0.1.2 validation, not a new iOS-device test for this documentation release.
+
+## 0.1.2 — interaction and language
 
 Date: **2026-09-07**. Obsidian **1.13.7**, installer **1.12.7**, Windows; Quiet Tree **0.2.2**. Node.js **24.19.0**.
 

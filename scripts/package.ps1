@@ -22,8 +22,8 @@ $branchInstallEntries = @('main.js','manifest.json','styles.css') | ForEach-Obje
   @{Source=$branchSource;Name=$_}
 }
 Write-BranchArchive (Join-Path $branchOutput "branch-note-$branchVersion.zip") $branchInstallEntries
-$branchSourceFiles = @('package.json','package-lock.json','manifest.json','versions.json','tsconfig.json','eslint.config.mjs','esbuild.config.mjs','styles.css','README.md','LICENSE','PUBLISHING.md','COMPATIBILITY.md','VALIDATION.md','CHANGELOG.md','RELEASE_NOTES.md','.gitignore','.gitattributes') | ForEach-Object {Get-Item -LiteralPath (Join-Path $branchRoot $_)}
-$branchSourceFiles += @('src','tests','scripts','.github') | ForEach-Object {Get-ChildItem -LiteralPath (Join-Path $branchRoot $_) -File -Recurse}
+$branchSourceFiles = @('package.json','package-lock.json','manifest.json','versions.json','tsconfig.json','eslint.config.mjs','esbuild.config.mjs','styles.css','README.md','README.zh-CN.md','LICENSE','PUBLISHING.md','COMPATIBILITY.md','VALIDATION.md','CHANGELOG.md','RELEASE_NOTES.md','.gitignore','.gitattributes') | ForEach-Object {Get-Item -LiteralPath (Join-Path $branchRoot $_)}
+$branchSourceFiles += @('src','tests','scripts','docs','.github') | ForEach-Object {Get-ChildItem -LiteralPath (Join-Path $branchRoot $_) -File -Recurse}
 $branchSourceEntries = $branchSourceFiles | ForEach-Object {
   @{Source=$_.FullName;Name=$_.FullName.Substring($branchRoot.Length+1).Replace('\','/')}
 }

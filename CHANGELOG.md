@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3
+
+- Present the core workflow with a concise overview and a real Obsidian screenshot.
+- Provide separate English and Simplified Chinese pages, with detailed behavior and development instructions in linked guides.
+- Put community-plugin installation first and include the new documentation in source archives.
+- Keep plugin behavior and settings unchanged.
+
 ## 0.1.2
 
 - Add Follow Obsidian alongside Chinese and English in the single language setting. Preserve existing explicit language choices.

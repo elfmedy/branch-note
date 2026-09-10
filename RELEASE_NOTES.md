@@ -1,19 +1,27 @@
-Branch Note 0.1.2
+Branch Note 0.1.3
 
 ## 中文
 
-- 语言设置增加“跟随 Obsidian”，共三个选项：跟随 Obsidian、中文、English。升级保留已有语言选择。
-- 修复打开目录首页后，被 Obsidian 的自动定位再次展开目录的问题。隐藏首页现在定位到目录条目，包含重新打开移动端侧栏后执行的延迟定位。
-- 普通子文件仍可正常自动定位，点击箭头仍可展开和折叠。
+让一篇笔记，自然长出子笔记。
 
-在 BRAT 中更新 `elfmedy/branch-note` 到 **0.1.2**。要求 Obsidian **1.13.7+**。请在 iPhone 上更新后再次测试；本次验证使用 Windows 桌面及 Obsidian 移动模拟模式，尚未实机验证 iOS。
+- 重新整理介绍页，用真实的 Obsidian 截图展示目录首页与子笔记。
+- 中英文独立成页，突出核心功能和三步上手流程。
+- 将文件规则、撤销、恢复与开发说明移到使用指南，安装说明优先展示 Obsidian 社区插件市场。
+
+本次更新展示与文档，插件功能和设置保持不变。在 Obsidian 的 **设置 → 第三方插件 → 检查更新** 中更新即可，无需重新配置。要求 Obsidian **1.13.7+**。
+
+[中文介绍](https://github.com/elfmedy/branch-note/blob/0.1.3/README.zh-CN.md) · [社区插件页面](https://community.obsidian.md/plugins/branch-note)
 
 ## English
 
-- Add Follow Obsidian to the language selector, alongside Chinese and English. Preserve existing language choices during upgrade.
-- Fix native auto-reveal expanding a folder after opening its hidden home. Reveal now targets the folder item, including deferred reveal when reopening the mobile sidebar.
-- Preserve ordinary child-file reveal and expand/collapse through the arrow.
+Give any note room to grow.
 
-Update `elfmedy/branch-note` to **0.1.2** in BRAT. Requires Obsidian **1.13.7+**. Windows desktop and Obsidian mobile emulation were checked; physical iOS confirmation remains pending.
+- Show folder homes and child notes with a real Obsidian screenshot.
+- Provide separate English and Chinese overviews, focused on core features and a three-step start.
+- Move file rules, undo, recovery and development details into usage guides; put community-plugin installation first.
 
-For manual installation, download all three assets into `.obsidian/plugins/branch-note/`. This release is distributed through GitHub/BRAT only.
+This release updates the presentation and documentation. Plugin behavior and settings are unchanged. Update through **Settings → Community plugins → Check for updates**; no reconfiguration is needed. Requires **Obsidian 1.13.7+**.
+
+[Overview](https://github.com/elfmedy/branch-note/blob/0.1.3/README.md) · [Community listing](https://community.obsidian.md/plugins/branch-note)
+
+BRAT users can update `elfmedy/branch-note`. For manual installation, download all three assets into `.obsidian/plugins/branch-note/`.
