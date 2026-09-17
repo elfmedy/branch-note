@@ -10,6 +10,7 @@ import {
   type Menu,
   type TAbstractFile,
   type WorkspaceLeaf,
+  type OpenViewState,
   type SettingDefinitionItem,
 } from "obsidian";
 import {
@@ -28,6 +29,7 @@ import {
   filterHomes,
   routeHomeReveals,
   isExplorer,
+  canRepresentFolder,
   type Explorer,
   type ExplorerItem,
 } from "./native";
@@ -191,13 +193,21 @@ export default class BranchNotePlugin extends Plugin {
     this.refresh();
     for (const view of this.views.keys())
       await view.fileItems[result.folder]?.setCollapsed?.(false);
-    await this.openMarkdown(result.child);
+    await this.openMarkdown(result.child, undefined, {
+      state: { mode: "source" },
+      eState: { rename: "all" },
+    });
     new Notice(this.t("created"));
   }
-  async openMarkdown(path: string, leaf?: WorkspaceLeaf): Promise<void> {
+  async openMarkdown(
+    path: string,
+    leaf?: WorkspaceLeaf,
+    state: OpenViewState = {},
+  ): Promise<void> {
     const file = this.app.vault.getAbstractFileByPath(path);
     if (!(file instanceof TFile)) throw new BranchError("missing", path);
     await (leaf ?? this.app.workspace.getLeaf(false)).openFile(file, {
+      ...state,
       active: true,
     });
     this.decorate();
@@ -332,7 +342,8 @@ export default class BranchNotePlugin extends Plugin {
         this.itemClicks.delete(item);
       }
     for (const item of Object.values(view.fileItems)) {
-      const folder = item.file instanceof TFolder;
+      const folder =
+        item.file instanceof TFolder && canRepresentFolder(view, item.file.path);
       if (
         folder &&
         !this.itemClicks.has(item) &&
@@ -346,6 +357,7 @@ export default class BranchNotePlugin extends Plugin {
           const target = event.target as HTMLElement | null;
           if (
             active &&
+            canRepresentFolder(view, item.file.path) &&
             !event.defaultPrevented &&
             (event.button === undefined || event.button === 0) &&
             !event.shiftKey &&

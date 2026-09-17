@@ -79,13 +79,22 @@ export interface Explorer {
   revealInFolder?(file: TAbstractFile): void;
 }
 
+/** Keep native home rows accessible if an internal explorer hook is unavailable. */
+export function canRepresentFolder(view: Explorer, path: string): boolean {
+  return (
+    typeof view.fileItems[path]?.onSelfClick === "function" &&
+    typeof view.revealActiveFile === "function" &&
+    typeof view.revealInFolder === "function"
+  );
+}
+
 /** Hidden homes are represented by their folder when native navigation reveals them. */
 export function routeHomeReveals(view: Explorer, fs: FilePort): () => void {
   let active = true;
   const cleanups: (() => void)[] = [];
   const folderItem = (file: TAbstractFile): ExplorerItem | undefined => {
     const parent = parentPath(file.path);
-    return homeOf(fs, parent)?.path === file.path
+    return canRepresentFolder(view, parent) && homeOf(fs, parent)?.path === file.path
       ? view.fileItems[parent]
       : undefined;
   };
@@ -151,7 +160,7 @@ export function filterHomes(view: Explorer, fs: FilePort): () => void {
   let active = true;
   function filtered(this: Explorer, folder: TFolder): ExplorerItem[] {
     const items = previous.call(this, folder);
-    if (!active) return items;
+    if (!active || !canRepresentFolder(this, folder.path)) return items;
     const home = homeOf(fs, folder.path);
     return home ? items.filter((item) => item.file.path !== home.path) : items;
   }

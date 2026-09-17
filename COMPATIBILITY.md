@@ -14,6 +14,8 @@ Folder renaming and same-directory home-file title renaming wrap `FileManager.re
 
 ## Limits
 
+- Since 0.1.4, hiding a home requires the folder click hook and both native reveal hooks. If one is unavailable, the home stays visible and folder arrows/clicks retain native access. This is a guarded fallback for missing hooks, not a guarantee against every future change to internal API behavior.
+
 - No physical Android/iOS or macOS tests. Obsidian 1.13.7 mobile emulation covers synthetic touch-origin clicks and sidebar/reveal behavior; it does not emulate iOS WebKit or certify a physical device. `isDesktopOnly: false` means no desktop-only runtime imports. The reported iPhone issue was on Obsidian 1.13.7 (365); confirmation on that device is still needed.
 - No broad guarantee for icon, replacement tree, sync or other folder-home plugins. No row icons or trailing buttons are added. Do not enable another same-name folder-home plugin simultaneously.
 - Native deletion (including single folders, keyboard Delete and bulk deletion), root-vault operations and attachments remain native. Only the explicit Branch Note Delete home note command deletes the matching Markdown while retaining children.

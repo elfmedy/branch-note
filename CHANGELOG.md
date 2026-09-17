@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4
+
+- Select the new child note's title using Obsidian's native new-note behavior, so it can be named immediately.
+- Keep home notes and native folder arrows accessible when internal folder-click or reveal hooks are unavailable.
+- Add issue-derived Sandbox regressions for same-name Base/Canvas isolation, special-character paths, external renames, reveal behavior and missing-hook fallback. No new features or settings.
+
 ## 0.1.3
 
 - Present the core workflow with a concise overview and a real Obsidian screenshot.

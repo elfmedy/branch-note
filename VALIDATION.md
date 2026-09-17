@@ -1,5 +1,20 @@
 # Validation
 
+## 0.1.4 — issue-derived regression fixes
+
+Date: **2026-09-17**. Obsidian **1.13.7**, Windows, default theme; Quiet Tree **0.2.2**.
+
+- Reproduced two failures before changes: creating a child did not select its title; removing the internal folder click hook left its home hidden.
+- Child creation now uses Obsidian's native new-note open state (`mode: source`, `rename: all`). Existing-note opens are unchanged.
+- Home hiding, reveal routing and folder decorations now require the click and both reveal hooks. Missing hooks keep native home rows and arrows accessible, and existing click wrappers delegate to native behavior.
+- `scripts/sandbox-issues.js`: **9 passed** on desktop. Covers same-name Base/Canvas rename isolation, Unicode/apostrophe paths, external folder rename, reveal in both fold states, missing click/reveal hooks, home-only arrow fallback and new-child title selection.
+- TypeScript, Obsidian ESLint, **30 unit tests**, release metadata, production build and bundle checks passed. Existing Sandbox checks: **21 passed**; Quiet Tree lifecycle checks: **10 passed**.
+- Existing interaction harness: **15 passed on desktop and 15 passed in mobile emulation**, including synthetic touch, collapsed/expanded folders, deferred reveal and unload/reload. Mobile emulation was disabled afterward and the Sandbox plugin assets were restored to their pre-test versions.
+- Tests use uniquely named Sandbox fixtures. Missing-interface cases are fault injection, not a claim that the current Obsidian version lacks these interfaces. No new settings or features; no daily-vault installation.
+- Physical iOS/Android, third-party themes and multi-device sync remain unverified by this review.
+
+Run the new regression harness with the same developer CLI procedure used below, substituting `scripts/sandbox-issues.js`.
+
 ## 0.1.3 — presentation and documentation
 
 Date: **2026-09-10**. Node.js **24.19.0**.
