@@ -6,12 +6,23 @@
 <p align="center">Turn notes into parent pages, with child notes in ordinary folders.</p>
 <p align="center">
   English · <a href="README.zh-CN.md">简体中文</a><br>
-  <a href="#features">Features</a> · <a href="#get-started">Get started</a> · <a href="#install">Install</a> · <a href="https://github.com/elfmedy/branch-note/issues">Feedback</a>
+  <a href="#get-started">Get started</a> · <a href="#features">Features</a> · <a href="#install">Install</a> · <a href="https://github.com/elfmedy/branch-note/issues">Feedback</a>
 </p>
 
-![Open a folder's home note while keeping its child notes together in Obsidian's native file explorer.](docs/assets/home-preview.png)
+## Get started
 
-*Click the folder name to open its home. Use the arrow to explore its children.*
+Start with a note called **Trip plan**. When you want a separate packing list, right-click it, choose **New child note**, and name the new note **Packing list**.
+
+Your file explorer now looks like this:
+
+```text
+Trip plan
+└─ Packing list
+```
+
+Click **Trip plan** to read and edit your original note. Click its arrow to show or hide **Packing list**. The original text stays in the parent; the child is a separate note. Give that child its own children whenever you need another level.
+
+Already have a folder? Use the same menu to add a child. Click the folder to open its home, or choose **Start writing** if it does not have one yet.
 
 ## Features
 
@@ -20,14 +31,6 @@
 - **Keep the tree simple.** The home is shown as its folder, without a duplicate file entry. Only folders with other children need an expand arrow.
 - **Write where you already write.** Use Obsidian's normal Markdown editor, links and themes. Settings contain just one language selector.
 - **Keep ordinary files.** Notes remain Markdown files in folders. Folder and home renames stay together; no special note format or association data is needed.
-
-## Get started
-
-1. Right-click a Markdown note and choose **New child note**.
-2. Write in the new child. Your original note becomes the parent's home.
-3. Click the parent name to return to its home, or its arrow to browse the children.
-
-Already have a folder? Add a child from the same menu, or click the folder and choose **Start writing** to create its home.
 
 ## Install
 
